@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Knife Game</title>
@@ -18,13 +18,17 @@ const addKnife = (e) => {
             const startX = rect.width / 2;
             const startY = rect.height + 100;
             
+            const colors = ['#FFD700', '#FF4500', '#8A2BE2', '#32CD32', '#FF1493', '#00CED1'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            
             setKnives([...knives, {
                 startX,
                 startY,
                 endX,
                 endY,
                 id: Date.now(),
-                rotation: Math.random() * 1080 + 720
+                rotation: Math.random() * 1080 + 720,
+                color: randomColor
             }]);
         };
 
@@ -58,18 +62,25 @@ const addKnife = (e) => {
                                 position: 'absolute',
                                 left: 0,
                                 top: 0,
-                                width: '24px',
-                                height: '120px',
+                                width: '48px',
+                                height: '240px',
                                 animation: `throw-${knife.id} 0.8s cubic-bezier(.17,.67,.83,.67) forwards`
                             }}
                         >
                             <svg viewBox="0 0 24 120" fill="none">
-                                <path d="M11 10L13 10L13 110L11 110L11 10Z" fill="#B8B8B8"/>
-                                <path d="M8 8L16 8C18 8 19 9 19 11L19 20L5 20L5 11C5 9 6 8 8 8Z" fill="#A0A0A0"/>
-                                <path d="M9 4L15 4L17 8L7 8L9 4Z" fill="#808080"/>
-                                <path d="M11.5 0L14 4L9 4L11.5 0Z" fill="#606060"/>
-                                <path d="M12 110L13 110L16 116L8 116L11 110Z" fill="#909090"/>
-                                <path d="M8 116L16 116L14 120L10 120L8 116Z" fill="#707070"/>
+                                <path d="M11 10L13 10L13 110L11 110L11 10Z" fill={knife.color} stroke="#444" strokeWidth="0.5"/>
+                                <path d="M8 8L16 8C18 8 19 9 19 11L19 20L5 20L5 11C5 9 6 8 8 8Z" fill="#444"/>
+                                <path d="M9 4L15 4L17 8L7 8L9 4Z" fill="#333"/>
+                                <path d="M11.5 0L14 4L9 4L11.5 0Z" fill="#222"/>
+                                <path d="M12 110L13 110L16 116L8 116L11 110Z" fill={knife.color} stroke="#444" strokeWidth="0.5"/>
+                                <path d="M8 116L16 116L14 120L10 120L8 116Z" fill="#555"/>
+                                <path d="M11 10L13 10L13 110L11 110L11 10Z" fill={knife.color} filter="url(#metal)"/>
+                                <defs>
+                                    <filter id="metal">
+                                        <feGaussianBlur stdDeviation="0.5"/>
+                                        <feComposite in="SourceGraphic"/>
+                                    </filter>
+                                </defs>
                             </svg>
                         </div>
                     ))}
